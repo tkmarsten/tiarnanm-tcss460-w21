@@ -1,44 +1,49 @@
 <!DOCTYPE html> <!-- defines that this document is an HTML5 document -->
 <!-- Comment. It may span multiple lines -->
 
-<html> <!-- the root element of an HTML page -->
- 
-    <head> <!-- contains meta information about the HTML page -->
-        <title>Hello World</title>
+<html>
+<!-- the root element of an HTML page -->
+<p>Hello World! Loading from Heroku</p>
 
-        <!-- <link rel="stylesheet" type="text/css" href="styles/site.css" />
+<head>
+    <!-- contains meta information about the HTML page -->
+    <title>Hello World</title>
+
+    <!-- <link rel="stylesheet" type="text/css" href="styles/site.css" />
         <style>
             h1 {
               color: orange;
             }
         </style> -->
 
-        
-    </head>
 
-    <body> <!-- defines the document's body, and is a container for all the visible contents -->
+</head>
 
+<body>
+    <!-- defines the document's body, and is a container for all the visible contents -->
+
+    <div>
+        <h1>My First <span id="theheading" class="info ignore">Heading</span></h1>
+        <p>My first paragraph.<br />I am on a <span class="info">new line</span> within this paragraph</p>
         <div>
-            <h1>My First <span id="theheading" class="info ignore">Heading</span></h1>
-            <p>My first paragraph.<br />I am on a <span class="info">new line</span> within this paragraph</p>
-            <div>
-                <ul class="info">
-                    <li class="even"><a href="js example.html">JavaScript Example</a></li>
-                    <li class="odd"><a href="jQuery example.html">JQuery Example</a></li>
-                    <li class="even"><a href="bootstrap example.html">Bootstrap Example</a></li>
-                    <li class="odd"><a href="/node">Node.js Endpoint Example</a></li>
-                </ul>
-            </div>
-            <p>
-                <span id="uwt">UW Tacoma</span> is an urban-serving university providing access to students in a 
-                way that transforms families and communities. We impact and inform economic 
-                development through community-engaged <span class="info bold ignore">students and faculty</span>. We conduct research 
-                that is of direct use to our community and region.
-            </p>
-            <p>Change in class.</p>
-            <a href="images/UWT.jpg"><img src="images/UWT.jpg" alt="UWT Stairs" width="500" height="333" /></a>
+            <ul class="info">
+                <li class="even"><a href="js example.html">JavaScript Example</a></li>
+                <li class="odd"><a href="jQuery example.html">JQuery Example</a></li>
+                <li class="even"><a href="bootstrap example.html">Bootstrap Example</a></li>
+                <li class="odd"><a href="/node">Node.js Endpoint Example</a></li>
+            </ul>
         </div>
+        <p>
+            <span id="uwt">UW Tacoma</span> is an urban-serving university providing access to students in a
+            way that transforms families and communities. We impact and inform economic
+            development through community-engaged <span class="info bold ignore">students and faculty</span>. We conduct
+            research
+            that is of direct use to our community and region.
+        </p>
+        <p>Change in class.</p>
+        <a href="images/UWT.jpg"><img src="images/UWT.jpg" alt="UWT Stairs" width="500" height="333" /></a>
+    </div>
 
-    </body>
+</body>
 
 </html>
