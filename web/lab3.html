@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Lab 3</title>
+    <script src="./scripts/lab3.js"></script>
+    <script>
+        function performProblemOne() {
+            document.getElementById("p1").innerHTML = "Problem 1 SOLVED";
+        }
+
+        function performProblemTwo() {
+            p2s = document.getElementsByClassName("p2");
+            for (const p2 of p2s) {
+                p2.innerHTML = "Problem 2 SOLVED";
+            }
+        }
+
+        function performProblemThree() {
+            p3 = document.getElementById("p3");
+
+            p1 = document.createElement("p");
+            p1.innerHTML = "BEFORE Problem 3 SOLVED";
+            p3.insertBefore(p1, p3.childNodes[0]);
+
+            p = p3.getElementsByTagName("p");
+            p2 = document.createElement("p");
+            p2.innerHTML = "AFTER Problem 3 SOLVED";
+            p3.insertBefore(p2, p[1].nextSibling);
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="container">
+        <p id="p1">Problem 1</p>
+        <button type="button" onclick="performProblemOne()">Perform Problem 1</button>
+        <p class="p2">Problem 2</p>
+        <p class="p2">Problem 2</p>
+        <p class="p2">Problem 2</p>
+        <p class="p2">Problem 2</p>
+        <button type="button" onclick="performProblemTwo()">Perform Problem 2</button>
+        <div id="p3">
+            <p>Problem 3</p>
+            <button type="button" onclick="performProblemThree()">Perform Problem 3</button>
+        </div>
+        <p>Problem 4</p>
+        <button type="button" onclick="performProblemFour()">Perform Problem 4</button>
+        <p>Problem 5</p>
+        <button type="button" onclick="performProblemFive()">Perform Problem 5</button>
+        <div id="p5" style="background-color: green;width: 50px;padding: 10px;">
+            <img src="images/cards/AS.jpg" alt="ace of spades" width="50px" />
+            <br />
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
