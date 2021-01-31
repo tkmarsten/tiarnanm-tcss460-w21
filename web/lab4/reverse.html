@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Reverse</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/Javascript">
+        $(document).ready(function() {
+            $("#input").val(sessionStorage.getItem("reverse"))
+            $("#bttn").click(getContent)
+        })
+
+        async function getContent() {
+            let response = await fetch(`https://tiarnanm-tcss460-w21.herokuapp.com/reverse/word?word=${$("#input").val()}`)
+            if (response.ok) {
+                let json = await response.json()
+                let reversedMessage = json.message
+                $("#input").val(reversedMessage)
+                sessionStorage.setItem("reverse", reversedMessage)
+            } else {
+                alert("HTTP-Error: " + reponse.status)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id="input" placeholder="Enter a message">
+    <br>
+    <button type="button" id="bttn">Reverse</button>
+</body>
+
+</html>

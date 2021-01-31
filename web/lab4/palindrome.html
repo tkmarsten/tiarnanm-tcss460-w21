@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Palindrome</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/Javascript">
+        $(document).ready(function() {
+            $("#bttn").click(getContent)
+            $("#input").on("input", reset)
+            $("#strict").change(reset)
+        })
+
+        function reset() {
+            text = document.getElementById("input")
+            text.style.backgroundColor = "white"
+            text.style.color = "black"
+        }
+
+        async function getContent() {
+            text = document.getElementById("input")
+            let phrase = $("#input").val()
+            let strict = $("#strict").is(':checked')
+            let message = {phrase, strict}
+
+            let response = await fetch('https://tiarnanm-tcss460-w21.herokuapp.com/reverse/palindrome', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(message)
+            })
+            
+            if (response.ok) {
+                let json = await response.json()
+                if (json.isPalindrome) {
+                    text.style.backgroundColor = "green"
+                    text.style.color = "white"
+                } else {
+                    text.style.backgroundColor = "red"
+                }
+            } else {
+                alert("HTTP-Error: " + reponse.status)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id="input" placeholder="Enter a message">
+    <br>
+    <input type="checkbox" id="strict">
+    <label for="strict">Strict?</label>
+    <br>
+    <button type="button" id="bttn">Check for palindrome</button>
+</body>
+
+</html>

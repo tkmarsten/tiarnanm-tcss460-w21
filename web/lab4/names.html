@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Names</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/Javascript">
+        $(document).ready(function() {
+            $("#firstname").val(sessionStorage.getItem("firstname"))
+            $("#lastname").val(sessionStorage.getItem("lastname"))
+            $("#bttn").click(getContent)
+        })
+
+        async function getContent() {
+            let response = await fetch(`https://tiarnanm-tcss460-w21.herokuapp.com/reverse/names?first=${$("#firstname").val()}&last=${$("#lastname").val()}`)
+            if (response.ok) {
+                let json = await response.json()
+                let count = json.count
+                let names = json.names
+                createList(names, count)
+            } else {
+                alert("HTTP-Error: " + reponse.status)
+            }
+        }
+
+        function createList(list, count) {
+            listContainer = document.createElement("div")
+            listElement = document.createElement("ul")
+
+            document.getElementsByTagName("body")[0].appendChild(listContainer)
+            listContainer.appendChild(listElement)
+
+            for (i = 0; i < count; i++) {
+                listItem = document.createElement('li')
+                listItem.innerHTML = list[i].first + " " + list[i].last
+                listElement.appendChild(listItem)
+            }
+        }
+    </script>
+
+    <style>
+        li:nth-child(even) {
+            background-color: black;
+            color: white
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="firstname" value="fValue" placeholder="First name">
+    <input type="text" id="lastname" value="lValue" placeholder="Last name">
+    <br>
+    <button type="button" id="bttn">Submit</button>
+</body>
+
+</html>
