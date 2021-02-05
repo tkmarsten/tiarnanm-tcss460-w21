@@ -29,6 +29,7 @@ app.use(middleware.jsonError)
 
 app.use('/demosql', require('./routes/demosql.js'))
 app.use('/', require('./routes/demo_eps.js'))
+app.use('/auth', require('./routes/signin.js'))
 app.use('/auth', require('./routes/register.js'))
 /*
  * A simple Node.js endpoint that responds with HTML.
