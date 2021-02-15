@@ -221,7 +221,7 @@
       "examples": [
         {
           "title": "Request-Query-Example:",
-          "content": "https://cfb3-tcss460-w21b.herokuapp.com/demosql/charles",
+          "content": "https://uwnetid-tcss460-w21.herokuapp.com/demosql/charles",
           "type": "json"
         }
       ]
@@ -241,10 +241,17 @@
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>the name of the deleted entry</p>"
+            "description": "<p>The string &quot;Deleted: &quot; followed by the value of the input parameter <code>name</code></p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"message\": \"Deleted: Charles\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -311,7 +318,7 @@
       "examples": [
         {
           "title": "Request-Query-Example:",
-          "content": "https://cfb3-tcss460-w21b.herokuapp.com/demosql/charles",
+          "content": "https://uwnetid-tcss460-w21.herokuapp.com/demosql/charles",
           "type": "json"
         }
       ]
@@ -397,7 +404,7 @@
           {
             "group": "Parameter",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "name",
             "description": "<p>someone's name</p>"
           },
@@ -433,10 +440,17 @@
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>the inserted name</p>"
+            "description": "<p>The string &quot;Inserted: &quot; followed by the value of the input parameter <code>name</code></p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 OK\n{\n  \"success\": true,\n  \"message\": \"Inserted: Charles\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -530,10 +544,17 @@
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>the name of the updated message</p>"
+            "description": "<p>The string &quot;Updated: &quot; followed by the value of the input parameter <code>name</code></p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"message\": \"Updated: Charles\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
