@@ -252,11 +252,11 @@ router.put("/", (request, response) => {
  * 
  * @apiUse JSONError
  */
-router.delete("/:name", (request, response) => {
+router.delete("/:name?", (request, response) => {
 
     if (isProvided(request.params.name)) {
         const theQuery = "DELETE FROM Demo  WHERE name = $1 RETURNING *"
-        const values = [request.params.name]
+        const values = [isProvided(request.params.name) ? request.params.name : '%']
 
         pool.query(theQuery, values)
             .then(result => {
