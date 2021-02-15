@@ -256,7 +256,7 @@ router.delete("/:name?", (request, response) => {
 
     if (isProvided(request.params.name)) {
         const theQuery = "DELETE FROM Demo  WHERE name = $1 RETURNING *"
-        const values = [isProvided(request.params.name) ? request.params.name : '%']
+        const values = [request.params.name]
 
         pool.query(theQuery, values)
             .then(result => {
