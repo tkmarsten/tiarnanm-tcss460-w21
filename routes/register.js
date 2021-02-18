@@ -5,33 +5,31 @@ const express = require('express')
 const crypto = require("crypto")
 
 //Access the connection to Heroku Database
-let pool = require('../utilities/exports').pool
+const pool = require('../utilities/exports').pool
 
-let getHash = require('../utilities/exports').getHash
+const getHash = require('../utilities/exports').getHash
 
 const isProvided = require('../utilities/exports').helpers.isProvided
+const { request } = require('express')
 
-var router = express.Router()
-
-const bodyParser = require("body-parser")
-//This allows parsing of the body of POST requests, that are encoded in JSON
-router.use(bodyParser.json())
+const router = express.Router()
 
 /**
- * @api {post} /register Request to register a user
+ * @api {post} /auth Request to register a user
  * @apiName PostAuth
  * @apiGroup Auth
  * 
  * @apiParam {String} first a users first name
  * @apiParam {String} last a users last name
- * @apiParam {String} email a users email *required unique
+ * @apiParam {String} email a users email *unique
  * @apiParam {String} password a users password
+ * @apiParam {String} [username] a username *unique, if none provided, email will be used
  * 
  * @apiParamExample {json} Request-Body-Example:
  *  {
  *      "first":"Charles",
  *      "last":"Bryan",
- *      "email":"cfb3@fake.email.coc",
+ *      "email":"cfb3@fake.email",
  *      "password":"test12345"
  *  }
  * 
@@ -44,17 +42,15 @@ router.use(bodyParser.json())
  * 
  * @apiError (400: Email exists) {String} message "Email exists"
  * 
- * @apiError (400: SQL Error) {String} message the reported SQL error details
  */
-router.post('/', (req, res) => {
-    res.type("application/json")
+router.post('/', (request, response) => {
 
     //Retrieve data from query params
-    var first = req.body.first
-    var last = req.body.last
-    var username = req.body.email //username not required for lab. Use email
-    var email = req.body.email
-    var password = req.body.password
+    const first = request.body.first
+    const last = request.body.last
+    const username = isProvided(request.body.username) ? request.body.username : request.body.email
+    const email = request.body.email
+    const password = request.body.password
     //Verify that the caller supplied all the parameters
     //In js, empty strings or null values evaluate to false
     if (isProvided(first) && isProvided(last) && isProvided(username) && isProvided(email) && isProvided(password)) {
@@ -71,25 +67,25 @@ router.post('/', (req, res) => {
         pool.query(theQuery, values)
             .then(result => {
                 //We successfully added the user!
-                res.status(201).send({
+                response.status(201).send({
                     success: true,
                     email: result.rows[0].email
                 })
             })
-            .catch((err) => {
+            .catch((error) => {
                 //log the error
-                console.log(err)
-                if (err.constraint == "members_username_key") {
-                    res.status(400).send({
+                // console.log(error)
+                if (error.constraint == "members_username_key") {
+                    response.status(400).send({
                         message: "Username exists"
                     })
-                } else if (err.constraint == "members_email_key") {
-                    res.status(400).send({
+                } else if (error.constraint == "members_email_key") {
+                    response.status(400).send({
                         message: "Email exists"
                     })
                 } else {
-                    res.status(400).send({
-                        message: err.detail
+                    response.status(400).send({
+                        message: error.detail
                     })
                 }
             })
@@ -99,5 +95,20 @@ router.post('/', (req, res) => {
         })
     }
 })
+
+router.get('/hash_demo', (request, response) => {
+    let password = 'hello12345'
+
+    let salt = crypto.randomBytes(32).toString("hex")
+    let salted_hash = getHash(password, salt)
+    let unsalted_hash = getHash(password)
+
+    response.status(200).send({
+        'salt': salt,
+        'salted_hash': salted_hash,
+        'unsalted_hash': unsalted_hash
+    })
+})
+
 
 module.exports = router

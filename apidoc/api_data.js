@@ -33,7 +33,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Authentication successful!</p>"
+            "description": "<p>&quot;Authentication successful!&quot;&quot;</p>"
           },
           {
             "group": "Success 200",
@@ -43,17 +43,33 @@ define({ "api": [
             "description": "<p>JSON Web Token</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 OK\n{\n  \"success\": true,\n  \"message\": \"Authentication successful!\",\n  \"token\": \"eyJhbGciO...abc123\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
-        "400: Missing Parameters": [
+        "400: Missing Authorization Header": [
           {
-            "group": "400: Missing Parameters",
+            "group": "400: Missing Authorization Header",
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>&quot;Missing required information&quot;</p>"
+            "description": "<p>&quot;Missing Authorization Header&quot;</p>"
+          }
+        ],
+        "400: Malformed Authorization Header": [
+          {
+            "group": "400: Malformed Authorization Header",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>&quot;Malformed Authorization Header&quot;</p>"
           }
         ],
         "404: User Not Found": [
@@ -73,15 +89,6 @@ define({ "api": [
             "field": "message",
             "description": "<p>&quot;Credentials did not match&quot;</p>"
           }
-        ],
-        "400: SQL Error": [
-          {
-            "group": "400: SQL Error",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>the reported SQL error details</p>"
-          }
         ]
       }
     },
@@ -91,7 +98,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/register",
+    "url": "/auth",
     "title": "Request to register a user",
     "name": "PostAuth",
     "group": "Auth",
@@ -117,7 +124,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>a users email *required unique</p>"
+            "description": "<p>a users email *unique</p>"
           },
           {
             "group": "Parameter",
@@ -125,13 +132,20 @@ define({ "api": [
             "optional": false,
             "field": "password",
             "description": "<p>a users password</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "username",
+            "description": "<p>a username *unique, if none provided, email will be used</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Body-Example:",
-          "content": "{\n    \"first\":\"Charles\",\n    \"last\":\"Bryan\",\n    \"email\":\"cfb3@fake.email.coc\",\n    \"password\":\"test12345\"\n}",
+          "content": "{\n    \"first\":\"Charles\",\n    \"last\":\"Bryan\",\n    \"email\":\"cfb3@fake.email\",\n    \"password\":\"test12345\"\n}",
           "type": "json"
         }
       ]
@@ -183,15 +197,6 @@ define({ "api": [
             "optional": false,
             "field": "message",
             "description": "<p>&quot;Email exists&quot;</p>"
-          }
-        ],
-        "400: SQL Error": [
-          {
-            "group": "400: SQL Error",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>the reported SQL error details</p>"
           }
         ]
       }
@@ -645,6 +650,91 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routes/demo_eps.js",
     "groupTitle": "Hello"
+  },
+  {
+    "type": "get",
+    "url": "/orders",
+    "title": "Request to get all Order entries in the DB",
+    "name": "GetOrders",
+    "group": "Orders",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "authorization",
+            "description": "<p>Valid JSON Web Token JWT</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Query-Example:",
+          "content": "https://uwnetid-tcss460-w21.herokuapp.com/orders",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "orders",
+            "description": "<p>List of Orders in the database</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "404: No Orders Found": [
+          {
+            "group": "404: No Orders Found",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>&quot;No Orders&quot;</p>"
+          }
+        ],
+        "400: JSON Error": [
+          {
+            "group": "400: JSON Error",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>&quot;malformed JSON in parameters&quot;</p>"
+          }
+        ],
+        "403: JSON Error": [
+          {
+            "group": "403: JSON Error",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>&quot;Token is not valid&quot; when a JWT is provided but it is expired or otherwise not valid</p>"
+          }
+        ],
+        "401: JSON Error": [
+          {
+            "group": "401: JSON Error",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>&quot;Auth token is not supplied&quot; when a JWT is not provided or it is provided in an incorrect format</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/demo_orders.js",
+    "groupTitle": "Orders"
   },
   {
     "type": "get",

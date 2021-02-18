@@ -24,27 +24,38 @@ const config = {
  * @apiHeader {String} authorization "username:password" uses Basic Auth 
  * 
  * @apiSuccess {boolean} success true when the name is found and password matches
- * @apiSuccess {String} message Authentication successful!
+ * @apiSuccess {String} message "Authentication successful!""
  * @apiSuccess {String} token JSON Web Token
  * 
- * @apiError (400: Missing Parameters) {String} message "Missing required information"
+ *  * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 201 OK
+ *     {
+ *       "success": true,
+ *       "message": "Authentication successful!",
+ *       "token": "eyJhbGciO...abc123"
+ *     }
+ * 
+ * @apiError (400: Missing Authorization Header) {String} message "Missing Authorization Header"
+ * 
+ * @apiError (400: Malformed Authorization Header) {String} message "Malformed Authorization Header"
  * 
  * @apiError (404: User Not Found) {String} message "User not found"
  * 
  * @apiError (400: Invalid Credentials) {String} message "Credentials did not match"
  * 
- * @apiError (400: SQL Error) {String} message the reported SQL error details
  */
 router.get('/', (request, response, next) => {
     if (isProvided(request.headers.authorization) || request.headers.authorization.startsWith('Basic ')) {
         next()
     } else {
-        response.status(401).json({ message: 'Missing Authorization Header' })
+        response.status(400).json({ message: 'Missing Authorization Header' })
     }
 }, (request, response, next) => {
     // obtain auth credentials from HTTP Header
     const base64Credentials = request.headers.authorization.split(' ')[1]
+
     const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii')
+
     const [email, password] = credentials.split(':')
 
     if (isProvided(email) && isProvided(password)) {
