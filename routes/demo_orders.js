@@ -97,7 +97,7 @@ router.post('/', (request, response, next) => {
             next()
         } else {
             response.status(400).send({
-                message: "Invalid size"
+                message: "Invalid parameter(s)"
             })
         }
     } else {
@@ -111,7 +111,7 @@ router.post('/', (request, response, next) => {
             next()
         } else {
             response.status(400).send({
-                message: "Invalid color"
+                message: "Invalid parameter(s)"
             })
         }
     } else {
@@ -126,7 +126,7 @@ router.post('/', (request, response, next) => {
             next()
         } else {
             response.status(400).send({
-                message: "Invalid option"
+                message: "Invalid parameter(s)"
             })
         }
     } else {
