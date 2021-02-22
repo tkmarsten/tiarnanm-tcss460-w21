@@ -68,4 +68,53 @@ router.get("/", (request, response) => {
         })
 })
 
+router.post('/', (request, response, next) => {
+    if (isProvided(request.body.size)) {
+        if (["small", "medium", "large"].includes(request.body.size)) {
+            next()
+        }
+    } else {
+        response.status(400).send({
+            message: "Missing required information"
+        })
+    }
+}, (request, response, next) => {
+    if (isProvided(request.body.color)) {
+        if (["red", "green", "blue"].includes(request.body.size)) {
+            next()
+        }
+    } else {
+        response.status(400).send({
+            message: "Missing required information"
+        })
+    }
+}, (request, response, next) => {
+    if (isProvided(request.body.option1 && request.body.option2 && request.body.option3)) {
+        const booleans = ["t", "true", "y", "yes", "on", "1", "f", "false", "n", "no", "off", "0"]
+        if (booleans.includes(option1) && booleans.includes(option2) && booleans.includes(option3)) {
+            next()
+        }
+    } else {
+        response.status(400).send({
+            message: "Missing required information"
+        })
+    }
+}, (request, response) => {
+    let theQuery = "INSERT INTO Orders(MemberID, My_Size, My_Color, Option1, Option2, Option3) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *"
+    let theValues = [request.decoded.memberid, request.body.size, request.body.color, request.body.option1, request.body.option2, request.body.option3]
+    pool.query(theQuery, theValues)
+        .then(result => {
+            response.status(201).send({
+                success: true,
+                message: "Inserted: " + result.rows[0].name
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            response.status(400).send({
+                message: err.detail
+            })
+        })
+})
+
 module.exports = router
