@@ -737,7 +737,7 @@ define({ "api": [
     "groupTitle": "Orders"
   },
   {
-    "type": "get",
+    "type": "post",
     "url": "/orders",
     "title": "Request to get all Order entries in the DB",
     "name": "PostOrder",
