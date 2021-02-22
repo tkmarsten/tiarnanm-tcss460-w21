@@ -68,6 +68,29 @@ router.get("/", (request, response) => {
         })
 })
 
+/**
+ * @apiDefine JSONError
+ * @apiError (400: JSON Error) {String} message "malformed JSON in parameters"
+ */
+
+/**
+ * @api {get} /orders Request to get all Order entries in the DB
+ * @apiName PostOrder
+ * @apiGroup Orders
+ *
+ * @apiHeader {String} authorization Valid JSON Web Token JWT 
+ * 
+ * @apiParamExample {json} Request-Query-Example:
+ *     https://uwnetid-tcss460-w21.herokuapp.com/orders
+ * @apiSuccess {boolean} success true when inserted
+ * @apiSuccess {Object[]} orders List of Orders in the database
+ * 
+ * @apiError (400: JSON Error) {String} message "malformed JSON in parameters"
+ * @apiError (403: JSON Error) {String} message "Token is not valid" when a JWT is provided but it is expired or otherwise not valid
+ * @apiError (401: JSON Error) {String} message "Auth token is not supplied" when a JWT is not provided or it is provided in an incorrect format
+ * 
+ * @apiUse JSONError
+ */
 router.post('/', (request, response, next) => {
     if (isProvided(request.body.size)) {
         if (["small", "medium", "large"].includes(request.body.size)) {
