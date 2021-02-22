@@ -95,6 +95,10 @@ router.post('/', (request, response, next) => {
     if (isProvided(request.body.size)) {
         if (["small", "medium", "large"].includes(request.body.size)) {
             next()
+        } else {
+            response.status(400).send({
+                message: "Invalid size"
+            })
         }
     } else {
         response.status(400).send({
@@ -105,6 +109,10 @@ router.post('/', (request, response, next) => {
     if (isProvided(request.body.color)) {
         if (["red", "green", "blue"].includes(request.body.size)) {
             next()
+        } else {
+            response.status(400).send({
+                message: "Invalid color"
+            })
         }
     } else {
         response.status(400).send({
@@ -116,6 +124,10 @@ router.post('/', (request, response, next) => {
         const booleans = ["t", "true", "y", "yes", "on", "1", "f", "false", "n", "no", "off", "0"]
         if (booleans.includes(option1) && booleans.includes(option2) && booleans.includes(option3)) {
             next()
+        } else {
+            response.status(400).send({
+                message: "Invalid option"
+            })
         }
     } else {
         response.status(400).send({
