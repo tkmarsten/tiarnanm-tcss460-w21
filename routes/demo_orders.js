@@ -74,7 +74,7 @@ router.get("/", (request, response) => {
  */
 
 /**
- * @api {get} /orders Request to get all Order entries in the DB
+ * @api {post} /orders Request to get all Order entries in the DB
  * @apiName PostOrder
  * @apiGroup Orders
  *
