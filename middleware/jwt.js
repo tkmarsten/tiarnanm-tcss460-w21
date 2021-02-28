@@ -1,15 +1,24 @@
 /*
  * Source provided by: https://github.com/auth0/node-jsonwebtoken
  */
-let jwt = require('jsonwebtoken')
-let config = {
+const jwt = require('jsonwebtoken')
+const config = {
     secret: process.env.JSON_WEB_TOKEN
 };
 
-let checkToken = (req, res, next) => {
-  let token = req.headers['x-access-token'] || req.headers['authorization'] // Express headers are auto converted to lowercase
+let checkToken = (request, response, next) => {
+  let token = request.headers['x-access-token'] || request.headers['authorization'] // Express headers are auto converted to lowercase
+  helper(request, response, next, token)
+};
 
+let checkTokenCookies = (request, response, next) => {
 
+console.log(request.cookies.access_token)
+
+  helper(request, response, next, request.cookies.access_token)
+}
+
+function helper(request, response, next, token) {
   if (token) {
     if (token.startsWith('Bearer ')) {
         // Remove Bearer from string
@@ -18,23 +27,23 @@ let checkToken = (req, res, next) => {
 
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) {
-        return res.status(403).json({
+        return response.status(403).json({
           success: false,
           message: 'Token is not valid'
-        });
+        })
       } else {
-        req.decoded = decoded
+        request.decoded = decoded
         next()
       }
-    });
+    })
   } else {
-    return res.status(401).json({
+    return response.status(401).json({
       success: false,
       message: 'Auth token is not supplied'
-    });
+    })
   }
-};
+}
 
 module.exports = {
-  checkToken: checkToken
+  checkToken, checkTokenCookies
 }

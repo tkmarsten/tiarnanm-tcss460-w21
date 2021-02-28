@@ -100,6 +100,20 @@ router.get('/', (request, response, next) => {
                         expiresIn: '14 days' // expires in 14 days
                     }
                 )
+                response.cookie('access_token', 'Bearer ' + token,
+                    {
+                        expires: new Date(Date.now() + 14 * 24 * 60 * 60000),
+                        httpOnly: true
+
+                    })
+                //use this cookie client side to know if a user is signed in    
+                response.cookie('authorized', true,
+                    {
+                        expires: new Date(Date.now() + 14 * 24 * 60 * 60000),
+                        //note this cookie is NOT httpOnly                   
+                        httpOnly: false
+                    })
+
                 //package and send the results
                 response.json({
                     success: true,
@@ -120,6 +134,22 @@ router.get('/', (request, response, next) => {
                 message: err.detail
             })
         })
+})
+
+router.delete("/", (request, response) => {
+
+    response.cookie('access_token', '',
+        {
+            // signed: true,
+            expires: new Date(Date.now()),
+            httpOnly: true
+
+        }).cookie('authorized', false,
+            {
+                // signed: true,
+                expires: new Date(Date.now()),
+                httpOnly: false
+            }).send({ 'deleted': true })
 })
 
 module.exports = router
