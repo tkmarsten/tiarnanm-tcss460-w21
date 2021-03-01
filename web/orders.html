@@ -14,26 +14,28 @@
             })
         }
 
-        let json = await response.json()
+        if (response.ok) {
+            let json = await response.json()
 
-        if (json.orders.length == 0) {
-            $("#container").append('<p>No orders</li>')
-        } else {
-            let orderN = 0
-            json.orders.forEach(element => {
-                orderN++;
-                var size = element.size
-                var color = element.color
-                var option1 = element.option1
-                var option2 = element.option2
-                var option3 = element.option3
-                $("#container").append(`<ul><li> Order ${orderN} -
-                    Size: ${size},
-                    Color: ${color},
-                    Option 1: ${option1},
-                    Option 2: ${option2},
-                    Option 3: ${option3}</li></ul>`)
-            })
+            if (json.orders.length == 0) {
+                $("#container").append('<p>No orders</li>')
+            } else {
+                let orderN = 0
+                json.orders.forEach(element => {
+                    orderN++;
+                    var size = element.size
+                    var color = element.color
+                    var option1 = element.option1
+                    var option2 = element.option2
+                    var option3 = element.option3
+                    $("#container").append(`<ul><li> Order ${orderN} -
+                        Size: ${size},
+                        Color: ${color},
+                        Option 1: ${option1},
+                        Option 2: ${option2},
+                        Option 3: ${option3}</li></ul>`)
+                })
+            }
         }
 
         async function logOut() {

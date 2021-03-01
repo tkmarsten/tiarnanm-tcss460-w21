@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/Javascript">
         async function placeOrder() {
-            let order = {
+            const order = {
                 size: $(".size:checked").val(),
                 color: $(".color:checked").val(),
                 option1: $("#option1").is(":checked"),
@@ -17,7 +17,7 @@
                 option3: $("#option3").is(":checked"),
             }
 
-            let response = await fetch("/orders", {
+            const response = await fetch("/orders", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,10 +25,10 @@
                 body: JSON.stringify(order)
             })
 
-            if (response.ok) {
-                let json = await response.json()
-                window.location.href = 'orders.html'
-            }
+            const json = await response.json()
+
+            console.log(json)
+            alert(json.message)
         }
 
         async function logOut() {
