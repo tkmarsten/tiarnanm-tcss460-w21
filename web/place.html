@@ -33,7 +33,7 @@
         }
 
         async function logOut() {
-            let response = await fetch("/auth/", {
+            let response = fetch("/auth", {
                 method: 'DELETE'
             })
 

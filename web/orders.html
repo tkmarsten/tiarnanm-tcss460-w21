@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/Javascript">
         $(document).ready(function () {
-            let response = await fetch("/orders", {
+            const response = fetch("/orders", {
                 method: "GET"
             })
             .then(response => response.json())
@@ -30,7 +30,7 @@
         })
 
         async function logOut() {
-            let response = await fetch("/auth/", {
+            let response = fetch("/auth", {
                 method: 'DELETE'
             })
 
