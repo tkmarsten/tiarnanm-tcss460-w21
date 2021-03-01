@@ -1,89 +1,64 @@
-<!DOCTYPE html> <!-- defines that this document is an HTML5 document -->
-<!-- Comment. It may span multiple lines -->
-
-<html>
-<!-- the root element of an HTML page -->
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <!-- contains meta information about the HTML page -->
-    <title>Display Orders</title>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/JavaScript">
-            window.onload=displayOrders;
-                async function displayOrders() {
-                let response = await fetch("/orders",  {
-                    method: 'GET',
-                })
-                    
-                if (response.ok) { // if HTTP-status is 200-299
-                    // get the response body (the method explained below)
-                    let json = await response.json()
-                    console.log(json)
-                    if(json.orders.length===0){
-                        $("#container").append('<li>No Order</li>')
-                    }else{
-                        let counter=0;
-                        json.orders.forEach(element => {
-                            counter ++;
-                            var size = element.my_size;
-                            var color = element.my_color;
-                            var option1 = element.option1;
-                            var option2 = element.option2;
-                            var option3 = element.option3;
-                            $("#container").append(`<ul><li> Order #${counter} :
-                                Size: ${size},
-                                Color: ${color},  
-                                Option1: ${option1},
-                                Option2: ${option2},
-                                Option3: ${option3}</li></ul>`)
-                            
-                        });
-                    }
-                } else {
-                    alert("HTTP-Error: " + response.status)
-                    console.log(response.status)
-                    let json = await response.json()
-                    console.log(json)
-                }
-            }
+    <script type="text/Javascript">
+        async function displayOrders() {
+            let response = awaot fetch("/orders", {
+                method: "GET"
+            })
+        }
 
-            async function logOut() {
-                let response = await fetch("/auth/",  {
-                    method: 'DELETE'
-                })
-                if (response.ok) { // if HTTP-status is 200-299
-                    // get the response body (the method explained below)
-                    let json = await response.json()
-                    console.log(json)
-                    window.location.href='signin.html'
+        if (response.ok) {
+            let json = await response.json()
 
-                } else {
-                    alert("HTTP-Error: " + response.status)
-                    console.log(response.status)
-                    let json = await response.json()
-                    console.log(json)
-                }
+            if (json.orders.length == 0) {
+                $("#container").append('<p>No orders</p>')
+            } else {
+                let orderN = 0
+                json.orders.forEach(element => {
+                    orderN++;
+                    var size = element.size
+                    var color = element.color
+                    var option1 = element.option1
+                    var option2 = element.option2
+                    var option3 = element.option3
+                    $("#container").append(`<ul><li> Order ${orderN} -
+                        Size: ${size},
+                        Color: ${color},
+                        Option 1: ${option1},
+                        Option 2: ${option2},
+                        Option 3: ${option3}</li></ul>`)
+                })
             }
-            $(document).ready(function(){
-                $("#backToOrder").click(()=> window.location="place.html")
-                $("#logOut").click(logOut)
+         }
+
+        async function logOut() {
+            let response = await fetch("/auth/", {
+                method: 'DELETE'
             })
 
-        </script>
+            if (response.ok) {
+                let json = await response.json()
+                window.location.href='signin.html'
+            }
+        }
 
+
+        $(document).ready(function() {
+            $("#logout").click(logout)
+        })
+    </script>
 </head>
 
 <body>
-    <!-- defines the document's body, and is a container for all the visible contents -->
-
-    <h1>Orders</h1>
-    <div id="container">
-    </div>
-
-    <button type="button" id="backToOrder">New Order</button>
-    <button type="button" id="logOut">Log Out</button>
-
+    <div id="container"></div>
+    <button id="logout">Log out</button>
 </body>
 
-</html>
+</html>/
