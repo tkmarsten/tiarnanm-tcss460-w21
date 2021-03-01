@@ -14,13 +14,14 @@
                 color: $("input[name='color']:checked").val(),
                 option1: $("#option1").is(":checked"),
                 option2: $("#option2").is(":checked"),
-                option3: $("#option3").is(":checked"),
+                option3: $("#option3").is(":checked")
             }
 
             const response = await fetch("/orders", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(order)
             })
