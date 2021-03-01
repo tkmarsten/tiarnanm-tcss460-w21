@@ -1,82 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- defines that this document is an HTML5 document -->
+<!-- Comment. It may span multiple lines -->
+
+<html>
+<!-- the root element of an HTML page -->
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- contains meta information about the HTML page -->
+    <title>New Order</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/Javascript">
-        async function placeOrder() {
-            const order = {
-                size: $("input[name='size']:checked").val(),
-                color: $("input[name='color']:checked").val(),
-                option1: $("#option1").is(':checked'),
-                option2: $("#option2").is(':checked'),
-                option3: $("#option3").is(':checked')
+    <script type="text/JavaScript">
+            async function placeOrder() {
+                
+                const data={
+                    size: document.querySelector('input[name="size"]:checked').value,
+                    color: document.querySelector('input[name="color"]:checked').value,
+                    option1: $('#option1').is(':checked'),
+                    option2: $('#option2').is(':checked'),
+                    option3: $('#option3').is(':checked')
+                };    
+
+                let response = await fetch("/orders",  {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    
+                if (response.ok) { // if HTTP-status is 200-299
+                    // get the response body (the method explained below)
+                    let json = await response.json()
+                    console.log(json)
+                    window.location.href='orders.html'
+                } else {
+                    alert("HTTP-Error: " + response.status)
+                    console.log(response.status)
+                    let json = await response.json()
+                    console.log(json)
+                }
             }
 
-            const response = await fetch("/orders", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(order)
-            })
+            async function logOut() {
+                let response = await fetch("/auth/",  {
+                    method: 'DELETE'
+                })
+                if (response.ok) { // if HTTP-status is 200-299
+                    // get the response body (the method explained below)
+                    let json = await response.json()
+                    console.log(json)
+                    window.location.href='signin.html'
 
-            const json = await response.json()
-
-            console.log(order)
-            console.log(json)
-            alert(json.message)
-        }
-
-        async function logOut() {
-            let response = await fetch("/auth/", {
-                method: 'DELETE'
-            })
-
-            if (response.ok) {
-                let json = await response.json()
-                window.location.href='signin.html'
+                } else {
+                    alert("HTTP-Error: " + response.status)
+                    console.log(response.status)
+                    let json = await response.json()
+                    console.log(json)
+                }
             }
-        }
+            $(document).ready(function(){
+                $("#placeOrder").click(placeOrder)
+                $("#logOut").click(logOut)
+            })
 
-        $(document).ready(function() {
-            $("#placeOrder").click(placeOrder)
-            $("#logout").click(logout)
-        })
-    </script>
+        </script>
+
 </head>
 
 <body>
-    <h5>Size</h5>
-    <input type="radio" id="small" name="size" value="small">
-    <label for="small">Small</label><br>
-    <input type="radio" id="medium" name="size" value="medium">
-    <label for="medium">Medium</label><br>
-    <input type="radio" id="large" name="size" value="large">
-    <label for="large">Large</label><br>
+    <!-- defines the document's body, and is a container for all the visible contents -->
 
-    <h5>Color</h5>
-    <input type="radio" id="red" name="color" value="red">
-    <label for="red">Red</label><br>
-    <input type="radio" id="green" name="color" value="green">
-    <label for="green">Green</label><br>
-    <input type="radio" id="blue" name="color" value="blue">
-    <label for="blue">Blue</label><br>
+    <h1>Create Your Order</h1>
+    <div id="container">
+        <h2>Size: </h2>
+        <ul style="list-style-type: none;">
+            <li><input type="radio" name="size" value="small" checked="checked">Small</li>
+            <li><input type="radio" name="size" value="medium">Medium</li>
+            <li><input type="radio" name="size" value="medium">Large</li>
+        </ul>
+        <h2>Color: </h2>
+        <ul style="list-style-type: none;">
+            <li><input type="radio" name="color" value="red" checked="checked">Red</li>
+            <li><input type="radio" name="color" value="green">Green</li>
+            <li><input type="radio" name="color" value="blue">Blue</li>
+        </ul>
+        <h2>Options: </h2>
+        <ul style="list-style-type: none;">
+            <li><input type="checkbox" id="option1">Option 1</li>
+            <li><input type="checkbox" id="option2">Option 2</li>
+            <li><input type="checkbox" id="option3">Option 3</li>
+        </ul>
+    </div>
 
-    <h5>Options</h5>
-    <input type="checkbox" id="option1" name="option1" value="option1">
-    <label for="option1">Option 1</label><br>
-    <input type="checkbox" id="option2" name="option2" value="option2">
-    <label for="option2">Option 2</label><br>
-    <input type="checkbox" id="option3" name="option3" value="option3">
-    <label for="option3">Option 3</label><br>
+    <button type="button" id="placeOrder">Place Order</button>
+    <button type="button" id="logOut">Log Out</button>
 
-    <button id="placeOrder">Place order</button>
-    <button id="logout">Log out</button>
 </body>
 
 </html>
