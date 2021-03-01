@@ -8,8 +8,9 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/Javascript">
+        window.onload = displayOrders;
         async function displayOrders() {
-            let response = awaot fetch("/orders", {
+            let response = await fetch("/orders", {
                 method: "GET"
             })
         }
@@ -58,6 +59,7 @@
 </head>
 
 <body>
+    <h5>Orders</h5>
     <div id="container"></div>
     <button id="placeOrder">Place order</button>
     <button id="logout">Log out</button>
