@@ -36,11 +36,7 @@
             let response = fetch("/auth", {
                 method: 'DELETE'
             })
-
-            if (response.ok) {
-                let json = await response.json()
-                window.location.href='signin.html'
-            }
+            .then(window.location.href="signin.html")
         }
 
         $(document).ready(function() {

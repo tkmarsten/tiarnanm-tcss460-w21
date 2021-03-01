@@ -14,8 +14,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                var orderN = 0;
-                for (orderN = 0; i < data.orders.length; i++) {
+                var i;
+                for (i = 0; i < data.orders.length; i++) {
                     $("#container").append("<ul><li> Order #" + (i + 1) + " - " + 
                         "Size: " + data.orders[i].my_size + ", " + 
                         "Color: " + data.orders[i].my_color + ", " + 
@@ -33,11 +33,7 @@
             let response = fetch("/auth", {
                 method: 'DELETE'
             })
-
-            if (response.ok) {
-                let json = await response.json()
-                window.location.href='signin.html'
-            }
+            .then(window.location.href="signin.html")
         }
     </script>
 </head>
