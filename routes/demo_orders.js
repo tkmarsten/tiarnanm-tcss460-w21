@@ -122,7 +122,7 @@ router.post('/', (request, response, next) => {
 }, (request, response, next) => {
     if (isProvided(request.body.option1 && request.body.option2 && request.body.option3)) {
         const booleans = ["t", "true", "y", "yes", "on", "1", "f", "false", "n", "no", "off", "0"]
-        if (booleans.includes(option1) && booleans.includes(option2) && booleans.includes(option3)) {
+        if (booleans.includes(request.body.option1) && booleans.includes(request.body.option2) && booleans.includes(request.body.option3)) {
             next()
         } else {
             response.status(400).send({
