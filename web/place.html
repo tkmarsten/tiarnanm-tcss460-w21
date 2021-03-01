@@ -23,12 +23,22 @@
                 },
                 body: JSON.stringify(data)
             })
+
+            if (response.ok) {
+                let json = await response.json()
+                window.location.href = 'orders.html'
+            }
         }
 
         async function logOut() {
             let response = await fetch("/auth/", {
                 method: 'DELETE'
             })
+
+            if (response.ok) {
+                let json = await response.json()
+                window.location.href='signin.html'
+            }
         }
 
         $(document).ready(function() {
@@ -62,6 +72,7 @@
     <input type="checkbox" id="option3" name="option3" value="option3">
     <label for="option3">Option 3</label><br>
 
+    <button id="placeOrder">Place order</button>
     <button id="logout">Log out</button>
 </body>
 
