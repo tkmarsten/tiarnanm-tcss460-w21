@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/Javascript">
+        async function placeOrder() {
+            let order = {
+                size: $(".size:checked").val(),
+                color: $(".color:checked").val(),
+                option1: $("#option1").is(":checked"),
+                option2: $("#option2").is(":checked"),
+                option3: $("#option3").is(":checked"),
+            }
+
+            let response = await fetch("/orders", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+        }
+
+        async function logOut() {
+            let response = await fetch("/auth/", {
+                method: 'DELETE'
+            })
+        }
+
+        $(document).ready(function() {
+            $("#logout").click(logout)
+        })
+    </script>
+</head>
+
+<body>
+    <h5>Size</h5>
+    <input type="radio" id="small" name="size" value="small">
+    <label for="small">Small</label><br>
+    <input type="radio" id="medium" name="size" value="medium">
+    <label for="medium">Medium</label><br>
+    <input type="radio" id="large" name="size" value="large">
+    <label for="large">Large</label><br>
+
+    <h5>Color</h5>
+    <input type="radio" id="red" name="color" value="red">
+    <label for="red">Red</label><br>
+    <input type="radio" id="green" name="color" value="green">
+    <label for="green">Green</label><br>
+    <input type="radio" id="blue" name="color" value="blue">
+    <label for="blue">Blue</label><br>
+
+    <h5>Options</h5>
+    <input type="checkbox" id="option1" name="option1" value="option1">
+    <label for="option1">Option 1</label><br>
+    <input type="checkbox" id="option2" name="option2" value="option2">
+    <label for="option2">Option 2</label><br>
+    <input type="checkbox" id="option3" name="option3" value="option3">
+    <label for="option3">Option 3</label><br>
+
+    <button id="logout">Log out</button>
+</body>
+
+</html>

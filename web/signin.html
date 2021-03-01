@@ -1,14 +1,16 @@
 <!DOCTYPE html> <!-- defines that this document is an HTML5 document -->
 <!-- Comment. It may span multiple lines -->
 
-<html> <!-- the root element of an HTML page -->
- 
-    <head> <!-- contains meta information about the HTML page -->
-        <title>Hello World</title>
+<html>
+<!-- the root element of an HTML page -->
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <!-- contains meta information about the HTML page -->
+    <title>Hello World</title>
 
-        <script type="text/JavaScript">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/JavaScript">
 
             async function sign_in() {
 
@@ -37,10 +39,16 @@
                         let b2 = $("<button>").text("Orders via Header")
                         b2.click(() => getOrdersFromHeader(json.token))
 
+                        let b3 = $("<button>").text("Place order")
+                        b3.click(() => window.location.href="places.html")
+
+                        let b4 = $("<button>").text("View orders")
+                        b4.click(() => window.location.href="orders.html")
+
                         let del = $("<button>").text("Logout")
                         del.click(() => deleteCookie())
 
-                        $("#butt").after($("<br>"), b, a, $("<br>"), b2, $("<br>"), del)
+                        $("#butt").after($("<br>"), b, a, $("<br>"), b2, $("<br>"), b3, b4, $("<br>"), del)
 
                         console.log(document.cookie)
                     }
@@ -117,20 +125,21 @@
 
 
         </script>
-        
-    </head>
 
-    <body> <!-- defines the document's body, and is a container for all the visible contents -->
+</head>
 
-
-        <div id="container">
-            <input type="text" id="uname" value="test1@test.com"/><br />
-            <input type="password" id="pwd" value="test12345"/>
-        </div>
+<body>
+    <!-- defines the document's body, and is a container for all the visible contents -->
 
 
-        <button type="button" id="butt">Sign In</button>
-        
-    </body>
+    <div id="container">
+        <input type="text" id="uname" value="test1@test.com" /><br />
+        <input type="password" id="pwd" value="test12345" />
+    </div>
+
+
+    <button type="button" id="butt">Sign In</button>
+
+</body>
 
 </html>
