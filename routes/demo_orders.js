@@ -141,7 +141,7 @@ router.post('/', (request, response, next) => {
         .then(result => {
             response.status(201).send({
                 success: true,
-                message: "Inserted: " + result.rows[0].name
+                message: "Order added"
             })
         })
         .catch(err => {
