@@ -51,13 +51,15 @@
 
 
         $(document).ready(function() {
-            $("#logout").click(logout)
+            $("#placeOrder").click(() => window.location.href="place.html")
+            $("#logout").click(logOut)
         })
     </script>
 </head>
 
 <body>
     <div id="container"></div>
+    <button id="placeOrder">Place order</button>
     <button id="logout">Log out</button>
 </body>
 

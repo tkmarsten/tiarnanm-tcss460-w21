@@ -45,7 +45,8 @@
 
         $(document).ready(function() {
             $("#placeOrder").click(placeOrder)
-            $("#logout").click(logout)
+            $("#viewOrder").click(() => window.location.href="orders.html")
+            $("#logout").click(logOut)
         })
     </script>
 </head>
@@ -76,6 +77,7 @@
     <label for="option3">Option 3</label><br>
 
     <button id="placeOrder">Place order</button>
+    <button id="viewOrder">View orders</button>
     <button id="logout">Log out</button>
 </body>
 
