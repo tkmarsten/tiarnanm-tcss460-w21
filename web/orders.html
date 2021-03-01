@@ -8,36 +8,26 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/Javascript">
-        window.onload = displayOrders;
-        async function displayOrders() {
+        $(document).ready(function () {
             let response = await fetch("/orders", {
                 method: "GET"
             })
-        }
+            .then(response => response.json())
+            .then(data => {
+                var orderN = 0;
+                for (orderN = 0; i < data.orders.length; i++) {
+                    $("#container").append("<ul><li> Order #" + (i + 1) + " - " + 
+                        "Size: " + data.orders[i].my_size + ", " + 
+                        "Color: " + data.orders[i].my_color + ", " + 
+                        "Option 1: " + data.orders[i].option1 + ", " +
+                        "Option 2: " + data.orders[i].option1 + ", " +
+                        "Option 3: " + data.orders[i].option1 + "</li></ul>")
+                }
+            })
 
-        if (response.ok) {
-            let json = await response.json()
-
-            if (json.orders.length == 0) {
-                $("#container").append('<p>No orders</p>')
-            } else {
-                let orderN = 0
-                json.orders.forEach(element => {
-                    orderN++;
-                    var size = element.size
-                    var color = element.color
-                    var option1 = element.option1
-                    var option2 = element.option2
-                    var option3 = element.option3
-                    $("#container").append(`<ul><li> Order ${orderN} -
-                        Size: ${size},
-                        Color: ${color},
-                        Option 1: ${option1},
-                        Option 2: ${option2},
-                        Option 3: ${option3}</li></ul>`)
-                })
-            }
-         }
+            $("#placeOrder").click(() => window.location.href="place.html")
+            $("#logout").click(logOut)
+        })
 
         async function logOut() {
             let response = await fetch("/auth/", {
@@ -49,12 +39,6 @@
                 window.location.href='signin.html'
             }
         }
-
-
-        $(document).ready(function() {
-            $("#placeOrder").click(() => window.location.href="place.html")
-            $("#logout").click(logOut)
-        })
     </script>
 </head>
 
