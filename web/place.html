@@ -12,9 +12,9 @@
             const order = {
                 size: $("input[name='size']:checked").val(),
                 color: $("input[name='color']:checked").val(),
-                option1: $("#option1").is(':checked'),
-                option2: $("#option2").is(':checked'),
-                option3: $("#option3").is(':checked')
+                option1: $("#option1").is(':checked').toString(),
+                option2: $("#option2").is(':checked').toString(),
+                option3: $("#option3").is(':checked').toString()
             }
 
             const response = await fetch("/orders", {
