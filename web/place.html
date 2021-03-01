@@ -10,8 +10,8 @@
     <script type="text/Javascript">
         async function placeOrder() {
             const order = {
-                size: $(".size:checked").val(),
-                color: $(".color:checked").val(),
+                size: $("input[name='size']:checked").val(),
+                color: $("input[name='color']:checked").val(),
                 option1: $("#option1").is(":checked"),
                 option2: $("#option2").is(":checked"),
                 option3: $("#option3").is(":checked"),
