@@ -107,7 +107,7 @@ router.post('/', (request, response, next) => {
     }
 }, (request, response, next) => {
     if (isProvided(request.body.color)) {
-        if (["red", "green", "blue"].includes(request.body.size)) {
+        if (["red", "green", "blue"].includes(request.body.color)) {
             next()
         } else {
             response.status(400).send({
